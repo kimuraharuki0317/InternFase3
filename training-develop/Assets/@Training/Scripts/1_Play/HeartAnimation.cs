@@ -47,15 +47,14 @@ public class HeartAnimation : MonoBehaviour
     void Update()
     {
         if (Player.HitPoint < HP) {
-            AnimationHeart(HeartBreak);
+            AnimationHeart();
         }
     }
 
     /// <summary>
     /// ハートのアニメーションを行う
     /// </summary>
-    /// <param name="spritesHeart">アニメーションするハート画像</param>
-    void AnimationHeart(Sprite[] spritesHeart)
+    void AnimationHeart()
     {
         if (intervalAnimation < IntervalAnimationMax) {
             // アニメーションのインターバル中
@@ -63,11 +62,11 @@ public class HeartAnimation : MonoBehaviour
             return;
         }
 
-        if (heartIndex == spritesHeart.Length - 1) {
+        if (heartIndex == HeartBreak.Length - 1) {
             Destroy(gameObject);
         } else {
             heartIndex++;
-            IMGHeart.sprite = spritesHeart[heartIndex];
+            IMGHeart.sprite = HeartBreak[heartIndex];
         }
         intervalAnimation = 0f;
     }
