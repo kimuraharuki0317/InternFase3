@@ -25,14 +25,20 @@ public class HeartAnimation : MonoBehaviour
     /// </summary>
     float intervalAnimation;
 
+    /// <summary>
+    /// 現在の画像の添字
+    /// </summary>
+    uint heartIndex;
+
     [SerializeField, Header("アニメーション間隔")]
     float IntervalAnimationMax;
 
     void Start()
     {
         // 画像の初期化
-        IMGHeart = GetComponent<Image>();
-        IMGHeart.sprite = HeartBreak[0];
+        IMGHeart=GetComponent<Image>();
+        heartIndex = 0;
+        IMGHeart.sprite = HeartBreak[heartIndex];
 
         // アニメーション間隔の初期化
         intervalAnimation = 0f;
@@ -57,29 +63,12 @@ public class HeartAnimation : MonoBehaviour
             return;
         }
 
-        // アニメーション
-        intervalAnimation = 0f;
-        for (var i = 0; i < spritesHeart.Length; i++) {
-            if (IMGHeart.sprite == spritesHeart[i]) {
-                if (i == spritesHeart.Length - 1) {
-                    if (spritesHeart == HeartBreak) {
-                        Destroy(gameObject);
-                        break;
-                    }
-
-                    // 最初の画像に戻す
-                    IMGHeart.sprite = spritesHeart[0];
-                    break;
-                } else {
-                    // 次の画像へ
-                    IMGHeart.sprite = spritesHeart[i + 1];
-                    break;
-                }
-            } else if (i == spritesHeart.Length - 1) {
-                // 画像を変更する
-                IMGHeart.sprite = spritesHeart[0];
-                break;
-            }
+        if (heartIndex == spritesHeart.Length - 1) {
+            Destroy(gameObject);
+        } else {
+            heartIndex++;
+            IMGHeart.sprite = spritesHeart[heartIndex];
         }
+        intervalAnimation = 0f;
     }
 }
