@@ -21,11 +21,17 @@ public class HitEffectAnimation : MonoBehaviour
     [SerializeField, Header("アニメーション間隔")]
     float IntervalAnimationMax = 0.1f;
 
+    /// <summary>
+    /// 現在の画像の添字
+    /// </summary>
+    uint effectIndex;
+
     void Start()
     {
         // 画像の初期化
         hitEffect = GetComponent<SpriteRenderer>();
-        hitEffect.sprite = Explosion[0];
+        effectIndex = 0;
+        hitEffect.sprite = Explosion[effectIndex];
 
         // アニメーション間隔の初期化
         intervalAnimation = 0f;
@@ -46,18 +52,12 @@ public class HitEffectAnimation : MonoBehaviour
         }
 
         // アニメーション
-        intervalAnimation = 0f;
-        for (var i = 0; i < Explosion.Length; i++) {
-            if (hitEffect.sprite == Explosion[i]) {
-                if (i == Explosion.Length - 1) {
-                    Destroy(gameObject); // あまりにも短期間でエフェクトを発生させると複数回呼び出される可能性あり
-                    break;
-                } else {
-                    // 次の画像へ
-                    hitEffect.sprite = Explosion[i + 1];
-                    break;
-                }
-            }
+        if (effectIndex == Explosion.Length - 1) {
+            Destroy(gameObject);
+        } else {
+            effectIndex++;
+            hitEffect.sprite = Explosion[effectIndex];
         }
+        intervalAnimation = 0f;
     }
 }
