@@ -15,7 +15,7 @@ public class HeartAnimation : SpriteAnimation
     {
         // プレイヤーのHPが担当するHP数を下回ったらハートが壊れるアニメーションを再生
         if (Player.HitPoint < HP) {
-            Animation();
+            PlayAnimation();
         }
     }
 }

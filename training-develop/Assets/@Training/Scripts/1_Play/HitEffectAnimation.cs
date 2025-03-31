@@ -6,5 +6,5 @@ public class HitEffectAnimation : SpriteAnimation
 {
     // ヒットエフェクトのアニメーションを再生
     void Update()
-        => Animation();
+        => PlayAnimation();
 }

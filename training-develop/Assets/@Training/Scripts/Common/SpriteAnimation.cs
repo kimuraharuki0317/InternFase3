@@ -5,9 +5,7 @@
 /// </summary>
 public class SpriteAnimation : MonoBehaviour
 {
-    /// <summary>
-    /// 画像編集用コンポーネント
-    /// </summary>
+    [SerializeField, Header("アニメーション画像")]
     SpriteRenderer spriteRenderer;
 
     [SerializeField, Header("アニメーション画像")]
@@ -40,7 +38,7 @@ public class SpriteAnimation : MonoBehaviour
     /// <summary>
     /// スプライトのアニメーションを行う
     /// </summary>
-    protected void Animation()
+    protected void PlayAnimation()
     {
         if (intervalAnimation < IntervalAnimationMax) {
             // アニメーションのインターバル中
@@ -56,6 +54,7 @@ public class SpriteAnimation : MonoBehaviour
             animationIndex++;
             spriteRenderer.sprite = AnimationSprite[animationIndex];
         }
+
         intervalAnimation = 0f;
     }
 }
