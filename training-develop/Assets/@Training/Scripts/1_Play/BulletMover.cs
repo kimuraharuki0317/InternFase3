@@ -21,6 +21,7 @@ public class BulletMover : MonoBehaviour
         // 発射方向を定める
         switch (MoveDirection) {
         default:
+            Debug.Log(gameObject.name + ": BulletMover コンポーネントの MoveDirection が未割当");
             break;
         case PhaseManager.Direction.Up:
         case PhaseManager.Direction.Down:

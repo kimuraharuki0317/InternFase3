@@ -28,6 +28,7 @@ public class BackgroundScroller : MonoBehaviour
 
         switch (ScrollDirection) {
         default:
+            Debug.Log(gameObject.name + ": BackgroundScroller コンポーネントの ScrollDirection が未割当");
             break;
         case PhaseManager.Direction.Up:
             scrollVector = Vector2.up;
