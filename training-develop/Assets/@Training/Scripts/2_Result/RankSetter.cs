@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,7 +23,7 @@ public class RankSetter : MonoBehaviour
     /// <summary>
     /// ランクそれぞれのスコア
     /// </summary>
-    float[] scoreRank = new float[6];
+    List<float> scoreRank = new List<float>();
 
     /// <summary>
     /// プレイヤースコアを取得、設定するためのキー
@@ -39,19 +41,24 @@ public class RankSetter : MonoBehaviour
         UpdateRank();
     }
 
+#if DEBUG
     void Update()
     {
         // escでランキングリセット
         if (Keyboard.current.escapeKey.wasPressedThisFrame) {
+            scoreRank.Clear();
+
+            // テキスト初期化
             for (var i = 0; i < TXTRankingScore.Length; i++) {
-                scoreRank[i + 1] = 0f;
                 TXTRankingScore[i].text = $"{i + 1} | _._s";
+                TXTPlayerScore.color = Color.white;
             }
 
             // データ領域のリセット
             PlayerPrefs.DeleteAll();
         }
     }
+#endif
 
     /// <summary>
     /// ランクのスコアが
@@ -62,19 +69,21 @@ public class RankSetter : MonoBehaviour
     {
         // プレイヤーのスコアを呼び出す
         scorePlayer = PlayerPrefs.GetFloat(Player_Score_Key);
-        TXTPlayerScore.text = $"{scorePlayer:f1}s";
+        TXTPlayerScore.text = $"{scorePlayer}s";
         TXTPlayerScore.color = Color.red;
+
+        // リスト初期化
+        scoreRank.Clear();
 
         if (PlayerPrefs.HasKey(Rank1_Score_Key)) {
             // データ領域の読み込み
-            for (var i = 1; i < scoreRank.Length; i++) {
-                scoreRank[i] = PlayerPrefs.GetFloat("Rank" + i);
+            for (var i = 1; i <= TXTRankingScore.Length; i++) {
+                scoreRank.Add(PlayerPrefs.GetFloat("Rank" + i));
             }
         } else {
             // データ領域の初期化
-            for (var i = 1; i < scoreRank.Length; i++) {
-                scoreRank[i] = 0f;
-                PlayerPrefs.SetFloat("Rank" + i, scoreRank[i]);
+            for (var i = 1; i < TXTRankingScore.Length; i++) {
+                PlayerPrefs.SetFloat("Rank" + i, 0f);
             }
         }
     }
@@ -84,45 +93,29 @@ public class RankSetter : MonoBehaviour
     /// </summary>
     void UpdateRank()
     {
-        var rankNew = 0; // 今回のスコアを最下位と仮定する
+        // プレイヤーのスコアを追加し、0を除いて昇順ソート
+        scoreRank.Add(scorePlayer);
+        scoreRank = scoreRank.Where(x => x != 0).OrderBy(x => x).ToList();
 
-        for (int i = scoreRank.Length - 1; i > 0; i--) {
-            // 昇順 1...5
-            if (scorePlayer != 0f) {
-                if (scoreRank[i] == 0f || scoreRank[i] >= scorePlayer) {
-                    // ランク番号の記録
-                    rankNew = i;
-                }
-            }
+        // データ領域に保存
+        for (var i = 1; i <= scoreRank.Count && i <= TXTRankingScore.Length; i++) {
+            PlayerPrefs.SetFloat("Rank" + i, scoreRank[i - 1]);
         }
 
-        // 同じスコアがなく、または新しいランクが見つかったら
-        if (rankNew != 0) {
-            // 0位のままでなかったらランクイン確定
-            for (int i = scoreRank.Length - 1; i > rankNew; i--) {
-                // 繰り下げ処理
-                scoreRank[i] = scoreRank[i - 1];
-            }
-
-            // 新ランクに登録
-            scoreRank[rankNew] = scorePlayer;
-
-            for (var i = 1; i < scoreRank.Length; i++) {
-                // データ領域に保存
-                PlayerPrefs.SetFloat("Rank" + i, scoreRank[i]);
-            }
-        }
-
-        // テキストに表示
         for (var i = 0; i < TXTRankingScore.Length; i++) {
-            if (scoreRank[i + 1] == 0f) {
-                TXTRankingScore[i].text = $"{i + 1} | _._s";
+            // テキストを更新
+            if (i < scoreRank.Count) {
+                TXTRankingScore[i].text = $"{i + 1} | {scoreRank[i]}s";
             } else {
-                TXTRankingScore[i].text = $"{i + 1} | {scoreRank[i + 1]:f1}s";
+                TXTRankingScore[i].text = $"{i + 1} | _._s";
+            }
+        }
 
-                if (i + 1 == rankNew) {
-                    TXTRankingScore[i].color = Color.red;
-                }
+        for (var i = scoreRank.Count - 1; 0 <= i; i--) {
+            // 今回のスコアを赤字にする
+            if (i < TXTRankingScore.Length && scoreRank[i] == scorePlayer) {
+                TXTRankingScore[i].color = Color.red;
+                break;
             }
         }
     }

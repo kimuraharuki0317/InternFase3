@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null) {
             // 初回のみインスタンス化
-            instance = (GameManager)FindAnyObjectByType(typeof(GameManager));
+            instance = this;
         } else {
             // 複製禁止
             Destroy(gameObject);

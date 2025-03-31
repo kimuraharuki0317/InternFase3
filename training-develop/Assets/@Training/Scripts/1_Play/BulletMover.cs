@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Windows.Forms;
+using UnityEngine;
 
 /// <summary>
 /// 弾の発射制御クラス
@@ -21,6 +22,7 @@ public class BulletMover : MonoBehaviour
         // 発射方向を定める
         switch (MoveDirection) {
         default:
+            MessageBox.Show(gameObject.name + "BulletMoverコンポーネントのMoveDirection が未割当", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             break;
         case PhaseManager.Direction.Up:
         case PhaseManager.Direction.Down:
@@ -35,11 +37,11 @@ public class BulletMover : MonoBehaviour
 
     void Update()
     {
-        Vector2 moveVector;
+        var moveVector = Vector2.zero;
 
         switch (MoveDirection) {
         default:
-            moveVector = Vector2.zero;
+            MessageBox.Show(gameObject.name + "BulletMoverコンポーネントのMoveDirection が未割当", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             break;
         case PhaseManager.Direction.Up:
         case PhaseManager.Direction.Left:

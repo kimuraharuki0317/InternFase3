@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Windows.Forms;
+using UnityEngine;
 
 /// <summary>
 /// 障害物クラス
@@ -102,6 +103,7 @@ public class HurdleComponent : MonoBehaviour
 
         switch (MoveDirection) {
         default:
+            MessageBox.Show(gameObject.name + "HurdleComponentコンポーネントのMoveDirection が未割当", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             break;
         case PhaseManager.Direction.Up:
             if (RB2D.bodyType == RigidbodyType2D.Dynamic) {
