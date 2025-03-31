@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Windows.Forms;
+using UnityEngine;
 
 /// <summary>
 /// 背景のスクロールクラス
@@ -28,7 +29,7 @@ public class BackgroundScroller : MonoBehaviour
 
         switch (ScrollDirection) {
         default:
-            Debug.Log(gameObject.name + ": BackgroundScroller コンポーネントの ScrollDirection が未割当");
+            MessageBox.Show(gameObject.name + "BackgroundScrollerコンポーネントのScrollDirectionが未割当", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             break;
         case PhaseManager.Direction.Up:
             scrollVector = Vector2.up;
@@ -39,7 +40,6 @@ public class BackgroundScroller : MonoBehaviour
         case PhaseManager.Direction.Left:
             scrollVector = Vector2.left;
             break;
-
         case PhaseManager.Direction.Right:
             scrollVector = Vector2.right;
             break;

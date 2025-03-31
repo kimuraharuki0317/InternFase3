@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -85,6 +86,7 @@ public class PlayerComponent : MonoBehaviour
 
         switch (MoveDirection) {
         default:
+            MessageBox.Show(gameObject.name + "PlayerComponentコンポーネントのMoveDirectionが未割当", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             break;
         case PhaseManager.Direction.Up:
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, 0), SpeedMove * Time.deltaTime);

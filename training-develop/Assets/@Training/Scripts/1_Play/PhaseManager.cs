@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -153,6 +154,7 @@ public class PhaseManager : MonoBehaviour
 
         switch (OriginDirection) {
         default:
+            MessageBox.Show(gameObject.name + "PhaseManagerコンポーネントのOriginDirectionが未割当", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
             break;
         case Direction.Up:
         case Direction.Down:
@@ -203,7 +205,6 @@ public class PhaseManager : MonoBehaviour
             return;
         }
 
-        // 方向の抽選、確定
         OriginDirection = validDirections[Random.Range(0, validDirections.Count)];
 
         SetHurdleParameter();
