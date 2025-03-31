@@ -27,6 +27,9 @@ public class PlayerComponent : MonoBehaviour
     [SerializeField, Header("移動速度")]
     float SpeedMove;
 
+    [SerializeField, Header("入力デッドゾーン")]
+    float MoveDeadZone = 0.01f;
+
     /// <summary>
     /// 障害物のタグを照合する時に使う文字列
     /// </summary>
@@ -130,7 +133,7 @@ public class PlayerComponent : MonoBehaviour
     void Move()
     {
         // 押下されていない / 十分にジョイスティックが倒れていない判定
-        if (inputMove.sqrMagnitude < 0.01f) {
+        if (inputMove.sqrMagnitude < MoveDeadZone) {
             return;
         }
 
