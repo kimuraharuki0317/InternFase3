@@ -41,6 +41,7 @@ public class RankSetter : MonoBehaviour
         UpdateRank();
     }
 
+#if DEBUG
     void Update()
     {
         // escでランキングリセット
@@ -57,6 +58,7 @@ public class RankSetter : MonoBehaviour
             PlayerPrefs.DeleteAll();
         }
     }
+#endif
 
     /// <summary>
     /// ランクのスコアが

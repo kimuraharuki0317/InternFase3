@@ -73,10 +73,12 @@ public class PlayerComponent : MonoBehaviour
 
     void Update()
     {
+#if DEBUG
         // 無限ヒール(デバッグ用)
         if (Keyboard.current.escapeKey.wasPressedThisFrame) {
             HitPoint = HitPointMax;
         }
+#endif
 
         switch (MoveDirection) {
         default:
