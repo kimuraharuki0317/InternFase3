@@ -11,14 +11,11 @@ public class UVScroll : MonoBehaviour
     [SerializeField, Header("スクロール速度")]
     float SlowMagnification;
 
-    /// <summary>
-    /// offsetの上限値
-    /// </summary>
-    [SerializeField]
+    [SerializeField, Header("offsetの上限値")]
     float OffsetMax = 1f;
 
     /// <summary>
-    /// マテリアルの画像をdirectionに基づいてUVスクロールさせる
+    /// マテリアルの画像をdirectionの向きにUVスクロールさせる
     /// </summary>
     /// <param name="direction">背景をスクロールする向き</param>
     public void Scroll(Vector2 direction)
