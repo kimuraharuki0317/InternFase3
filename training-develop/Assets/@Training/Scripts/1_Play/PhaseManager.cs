@@ -203,19 +203,8 @@ public class PhaseManager : MonoBehaviour
             return;
         }
 
-        Direction tmpDirection;
-
-        // 方向の抽選
-        do {
-            tmpDirection = (Direction)Random.Range(0, (int)Direction.Right + 1);
-
-            if (validDirections.Contains(tmpDirection)) {
-                break;
-            }
-        } while (true);
-
-        // 方向の確定
-        OriginDirection = tmpDirection;
+        // 方向の抽選、確定
+        OriginDirection = validDirections[Random.Range(0, validDirections.Count)];
 
         SetHurdleParameter();
 
