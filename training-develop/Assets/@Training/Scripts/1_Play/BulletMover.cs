@@ -35,11 +35,10 @@ public class BulletMover : MonoBehaviour
 
     void Update()
     {
-        Vector2 moveVector;
+        var moveVector = Vector2.zero;
 
         switch (MoveDirection) {
         default:
-            moveVector = Vector2.zero;
             break;
         case PhaseManager.Direction.Up:
         case PhaseManager.Direction.Left:
