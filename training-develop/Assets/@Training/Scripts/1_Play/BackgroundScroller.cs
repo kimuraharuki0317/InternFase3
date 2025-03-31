@@ -7,15 +7,7 @@ using UnityEngine;
 public class BackgroundScroller : MonoBehaviour
 {
     [SerializeField, Header("背景のマテリアル取得用")]
-    SpriteRenderer Background;
-
-    /// <summary>
-    /// offsetの上限値
-    /// </summary>
-    const float OffsetMax = 1f;
-
-    [SerializeField, Header("遅くする倍率(小数点単位で記入)")]
-    float SlowMagnification;
+    UVScroll BackgroundScroll;
 
     /// <summary>
     /// スクロール方向を保持する変数
@@ -46,6 +38,6 @@ public class BackgroundScroller : MonoBehaviour
         }
 
         // 背景をスクロールする
-        Background.material.SetTextureOffset("_MainTex", scrollVector * Mathf.Repeat(SlowMagnification * Time.time, OffsetMax));
+        BackgroundScroll.Scroll(scrollVector);
     }
 }
